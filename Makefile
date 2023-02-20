@@ -4,6 +4,9 @@ help:
 flags:
 	echo "-s = silent"
 
+install:
+	pip install -r ./backend-flask/requirements.txt
+
 set:
 	export $(cat .env | xargs)
 
@@ -32,3 +35,30 @@ close:
 	echo "terminal command to close mac application"
 	pkill -x Docker	# Or: # killall Docker
 	# sleep 10
+
+img:
+	docker images
+
+ps:
+	docker ps
+
+home:
+	curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json" | jq
+
+groups:
+	curl -X GET http://localhost:4567/api/message_groups -H "Accept: application/json" -H "Content-Type: application/json" | jq
+
+logs:
+	echo "________________________________________________________________________"
+	echo "CONTAINER_ID:"
+	docker logs CONTAINER_ID -f
+	echo "________________________________________________________________________"
+	echo "backend-flask:"
+	docker logs backend-flask -f
+	echo "________________________________________________________________________"
+	echo "$CONTAINER_ID"
+	docker logs $CONTAINER_ID -f
+
+scan:
+	echo "Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them.	refresh browser when terminal stops outputting new logs."
+	docker scan
