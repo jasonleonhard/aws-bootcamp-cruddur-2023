@@ -23,10 +23,14 @@ open-endpoint:
 	echo "refresh browser when terminal stops outputting new logs"
 
 build:
-	docker build -t backend-flask ./backend-flask;
+	docker build -t backend-flask ./backend-flask; # without tag
+
+build-tag:
+	docker build -t backend-flask/latest:my-tag ./backend-flask; #  with tag
 
 run:
-	docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend-flask
+	docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend-flask # will produce dangling iamges
+	# docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend-flask
 
 dev:
 	make -s open-docker && make -s build && make -s open-endpoint && make -s run
@@ -37,10 +41,39 @@ close:
 	# sleep 10
 
 img:
+	echo "IMAGES:"
 	docker images
 
+img2:
+	echo "IMAGES:"
+	docker images --no-trunc -a
+
 ps:
+	echo "PS:"
 	docker ps
+
+ps2:
+	echo "PS:"
+	docker ps --no-trunc -a
+
+info:
+	echo "________________________________________________________________________"
+	make -s img
+	echo "________________________________________________________________________"
+	make -s ps
+	echo "________________________________________________________________________"
+
+info2:
+	echo "________________________________________________________________________"
+	make -s img2
+	echo "________________________________________________________________________"
+	make -s ps2
+	echo "________________________________________________________________________"
+
+info3:
+	clear
+	make -s info
+	make -s info2
 
 home:
 	curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json" | jq
