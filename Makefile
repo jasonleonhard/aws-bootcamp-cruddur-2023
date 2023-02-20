@@ -22,18 +22,23 @@ open-endpoint:
 	open http://localhost:4567/api/activities/home
 	echo "refresh browser when terminal stops outputting new logs"
 
-build:
+build-back:
 	docker build -t backend-flask ./backend-flask; # without tag
 
-build-tag:
+build-back-tag:
 	docker build -t backend-flask/latest:my-tag ./backend-flask; #  with tag
 
-run:
+run-back:
 	docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend-flask # will produce dangling iamges
 	# docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend-flask
 
 dev:
-	make -s open-docker && make -s build && make -s open-endpoint && make -s run
+	# make -s open-docker && make -s build-back && make -s open-endpoint && make -s run
+	make -s open-docker && make -s build-back && make -s build-front && make -s open-endpoint && make -s run-back # && make -s run-front
+
+front:
+	open http://localhost:3000
+	docker run -p 3000:3000 -d frontend-react-js
 
 close:
 	echo "terminal command to close mac application"
@@ -95,3 +100,24 @@ logs:
 scan:
 	echo "Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them.	refresh browser when terminal stops outputting new logs."
 	docker scan
+
+build-front:
+	docker build -t frontend-react-js ./frontend-react-js
+
+run-front:
+	docker run -p 3000:3000 -d frontend-react-js
+
+dev2:
+	# docker compose up # shows front and back but not data in front
+	docker compose -f "docker-compose.yml" up -d --build
+
+# npm-setup:
+# 	nvm install --lts;
+# 	nvm use --lts;
+# 	node -v # v18.14.1
+
+# npm-install:
+# 	npm i ./frontend-react-js
+# 	npm audit
+# 	npm audit fix
+# 	npm audit
