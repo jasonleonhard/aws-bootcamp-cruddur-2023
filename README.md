@@ -31,3 +31,7 @@ The `/journal` directory contains
 - [ ] [Week 11](journal/week11.md)
 - [ ] [Week 12](journal/week12.md)
 - [ ] [Week 13](journal/week13.md)
+
+## AWS Lucid Chart Architectural Design Diagram
+
+![AWS Lucid Chart Architectural Design Diagram](./AWS%20Lucid%20Chart%20Architectural%20Design%20Diagram.png)
