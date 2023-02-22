@@ -4,14 +4,26 @@ help:
 flags:
 	echo "-s = silent"
 
-install:
-	pip install -r ./backend-flask/requirements.txt
-
 set:
 	export $(cat .env | xargs)
 
 check:
 	cat .env
+
+
+install-back:
+	pip install -r ./backend-flask/requirements.txt
+
+install-front:
+	# this presumes you have already setup nvm such as # nvm install --lts; nvm use --lts; node -v; # v18.14.1
+	cd frontend-react-js; \
+	npm i; \
+	npm audit; \
+	npm audit fix; \
+	npm audit; \
+	cd ..; \
+	# npm i ./frontend-react-js
+	# npm i ./frontend-react-js/package.json # does this work instead?
 
 open-docker:
 	open -a /Applications/Docker.app
@@ -34,7 +46,7 @@ run-back:
 
 dev:
 	# make -s open-docker && make -s build-back && make -s open-endpoint && make -s run
-	make -s open-docker && make -s build-back && make -s build-front && make -s open-endpoint && make -s run-back # && make -s run-front
+	make -s set && make -s install-back && make -s install-front && make -s build-front && make -s open-endpoint && make -s open-docker && make -s build-back && make -s run-back 		# && make -s run-front
 
 front:
 	open http://localhost:3000
@@ -108,16 +120,11 @@ run-front:
 	docker run -p 3000:3000 -d frontend-react-js
 
 dev2:
+	make -s build-front
+	open http://localhost:3000
+	make -s run-front
+
+dev3:
 	# docker compose up # shows front and back but not data in front
 	docker compose -f "docker-compose.yml" up -d --build
 
-# npm-setup:
-# 	nvm install --lts;
-# 	nvm use --lts;
-# 	node -v # v18.14.1
-
-# npm-install:
-# 	npm i ./frontend-react-js
-# 	npm audit
-# 	npm audit fix
-# 	npm audit
