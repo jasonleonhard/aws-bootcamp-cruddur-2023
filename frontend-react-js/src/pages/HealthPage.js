@@ -1,4 +1,4 @@
-import "./HomeFeedPage.css";
+import "./HealthPage.css";
 import React from "react";
 
 import DesktopNavigation from "../components/DesktopNavigation";
@@ -7,10 +7,10 @@ import ActivityFeed from "../components/ActivityFeed";
 import ActivityForm from "../components/ActivityForm";
 import ReplyForm from "../components/ReplyForm";
 
-// [TODO] Authentication
+// [TODO] Authenication
 import Cookies from "js-cookie";
 
-export default function HomeFeedPage() {
+export default function HealthPage() {
   const [activities, setActivities] = React.useState([]);
   const [popped, setPopped] = React.useState(false);
   const [poppedReply, setPoppedReply] = React.useState(false);

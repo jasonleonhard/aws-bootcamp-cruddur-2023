@@ -26,6 +26,11 @@ cors = CORS(
 )
 
 
+@app.route('/health')
+def health():
+    return 'You are healthy!', 200
+
+
 @app.route("/checkEnvVars", methods=['GET'])
 def checkEnvVars():
     return frontend + " " + backend, 200

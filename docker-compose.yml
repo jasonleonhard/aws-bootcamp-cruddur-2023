@@ -2,27 +2,30 @@ version: "3.8"
 services:
   backend-flask:
     image: python:3.10-slim-buster
+    volumes:
+      - ./backend-flask:/backend-flask
     env_file:
       - .env
     ports:
       - "4567:4567"
-    volumes:
-      - ./backend-flask:/backend-flask
-    command: sh -c "cd /backend-flask && pip3 install -r requirements.txt && FLASK_DEBUG=1; python3 -m flask run --host=0.0.0.0 --port=4567"
+    command: sh -c "cd /backend-flask && pip3 install -r requirements.txt && python3 -m flask run --host=0.0.0.0 --port=4567"
   frontend-react-js:
     image: node:16.18
+    volumes:
+      - ./frontend-react-js:/frontend-react-js
     env_file:
       - .env
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend-react-js:/frontend-react-js
     command: sh -c "cd /frontend-react-js && npm install && npm start"
   db:
     image: postgres:13-alpine
     restart: always
     env_file:
       - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
