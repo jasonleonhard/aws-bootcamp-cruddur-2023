@@ -6,29 +6,29 @@ ports:
   - name: backend
     port: 4567
     visibility: public
-  - name: xray-daemon
-    port: 2000
-    visibility: public
+  # - name: xray-daemon
+  #   port: 2000
+  #   visibility: public
+  # Port 2000 TCP Cisco SCCP (Skinny) (Officially Registered with IANA). TCP Port 2000 is the port reserved for Cisco SCCP (Skinny) Protocol. Using Wireshark a packet capture showed the Tax Trust program was using TCP Port 2000 between the clients and the servers.
+  # https://support.hpe.com/hpesc/public/docDisplay?docId=emr_na-c02217116#:~:text=Port%202000%20TCP%20Cisco%20SCCP,the%20clients%20and%20the%20servers.
 
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
     - cweijan.vscode-postgresql-client2
-    - 42Crunch.vscode-openapi
-
-tasks:
-  - name: aws-cli
-    env:
-      AWS_CLI_AUTO_PROMPT: on-partial
-    init: |
-      cd /workspace
-      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      unzip awscliv2.zip
-      sudo ./aws/install
-      cd $THEIA_WORKSPACE_ROOT
-  - name: postgres
-    init: |
-      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
-      echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
-      sudo apt update
-      sudo apt install -y postgresql-client-13 libpq-dev
+# tasks:
+#   - name: aws-cli
+#     env:
+#       AWS_CLI_AUTO_PROMPT: on-partial
+#     init: |
+#       cd /workspace
+#       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#       unzip awscliv2.zip
+#       sudo ./aws/install
+#       cd $THEIA_WORKSPACE_ROOT
+#   - name: postgres
+#     init: |
+#       curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+#       echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+#       sudo apt update
+#       sudo apt install -y postgresql-client-13 libpq-dev
