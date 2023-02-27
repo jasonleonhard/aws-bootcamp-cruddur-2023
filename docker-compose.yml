@@ -1,30 +1,23 @@
 version: "3.8"
 services:
   backend-flask:
-    environment:
-      FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+    env_file:
+      - .env
     build: ./backend-flask
     ports:
       - "4567:4567"
     volumes:
       - ./backend-flask:/backend-flask
   frontend-react-js:
+    # automatically install node modules via Dockerfile from docker-compose.yml
     image: node:16.18
     command: sh -c "cd /frontend-react-js && npm install && npm start"
     ports:
       - "3000:3000"
-    environment:
-      REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      #   - NODE_ENV=production
-      # A. this does not install node moduals and requires manually installing them
-      # build: ./frontend-react-js
-      # B. automatically install node modules via Dockerfile from docker-compose.yml
+    env_file:
+      - .env
     volumes:
       - ./frontend-react-js:/frontend-react-js
-    # build:
-    #   context: ./frontend-react-js
-    #   dockerfile: Dockerfile
   db:
     image: postgres:13-alpine
     restart: always
