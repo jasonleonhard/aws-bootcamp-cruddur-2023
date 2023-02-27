@@ -1,23 +1,23 @@
 version: "3.8"
 services:
   backend-flask:
+    image: python:3.10-slim-buster
     env_file:
       - .env
-    build: ./backend-flask
     ports:
       - "4567:4567"
     volumes:
       - ./backend-flask:/backend-flask
+    command: sh -c "cd /backend-flask && pip3 install -r requirements.txt && FLASK_DEBUG=1; python3 -m flask run --host=0.0.0.0 --port=4567"
   frontend-react-js:
-    # automatically install node modules via Dockerfile from docker-compose.yml
     image: node:16.18
-    command: sh -c "cd /frontend-react-js && npm install && npm start"
-    ports:
-      - "3000:3000"
     env_file:
       - .env
+    ports:
+      - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
+    command: sh -c "cd /frontend-react-js && npm install && npm start"
   db:
     image: postgres:13-alpine
     restart: always
