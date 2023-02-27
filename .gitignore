@@ -1,8 +1,5 @@
 .DS_Store
 .env
-.env.local
-.env.example
-.env.both
 node_modules
 notes.md
 docker/dynamodb/*
