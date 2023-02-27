@@ -25,6 +25,10 @@ install-front:
 	# npm i ./frontend-react-js
 	# npm i ./frontend-react-js/package.json # does this work instead?
 
+reinstall-front:
+	rm -rf node_modules; \
+	npm i;
+
 open-docker:
 	open -a /Applications/Docker.app
 	echo "Note Docker Desktop App takes time to open and initialize be please be patient"
