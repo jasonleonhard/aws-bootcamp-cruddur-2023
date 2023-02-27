@@ -37,7 +37,7 @@ export default function HomeFeedPage() {
 
   const checkAuth = async () => {
     console.log("checkAuth");
-    // [TODO] Authenication
+    // [TODO] Authentication
     if (Cookies.get("user.logged_in")) {
       setUser({
         display_name: Cookies.get("user.name"),

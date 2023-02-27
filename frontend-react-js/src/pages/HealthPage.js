@@ -7,7 +7,7 @@ import ActivityFeed from "../components/ActivityFeed";
 import ActivityForm from "../components/ActivityForm";
 import ReplyForm from "../components/ReplyForm";
 
-// [TODO] Authenication
+// [TODO] Authentication
 import Cookies from "js-cookie";
 
 export default function HealthPage() {
@@ -37,7 +37,7 @@ export default function HealthPage() {
 
   const checkAuth = async () => {
     console.log("checkAuth");
-    // [TODO] Authenication
+    // [TODO] Authentication
     if (Cookies.get("user.logged_in")) {
       setUser({
         display_name: Cookies.get("user.name"),
@@ -71,6 +71,7 @@ export default function HealthPage() {
           setActivities={setActivities}
           activities={activities}
         />
+        <div style={{ background: "cyan" }}>STATUS: HEALTHY!</div>
         <ActivityFeed
           title="Home"
           setReplyActivity={setReplyActivity}
