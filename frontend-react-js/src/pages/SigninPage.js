@@ -1,12 +1,13 @@
-import "./SigninPage.css";
+import "./SignInPage.css";
 import React from "react";
-import { ReactComponent as Logo } from "../components/svg/logo.svg";
+
 import { Link } from "react-router-dom";
+import { ReactComponent as Logo } from "../components/svg/logo.svg";
 
 // [TODO] Authentication
 import Cookies from "js-cookie";
 
-export default function SigninPage() {
+export default function SignInPage() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [errors, setErrors] = React.useState("");

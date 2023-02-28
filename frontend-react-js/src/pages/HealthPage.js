@@ -1,10 +1,10 @@
 import "./HealthPage.css";
 import React from "react";
 
-import DesktopNavigation from "../components/DesktopNavigation";
-import DesktopSidebar from "../components/DesktopSidebar";
 import ActivityFeed from "../components/ActivityFeed";
 import ActivityForm from "../components/ActivityForm";
+import DesktopNavigation from "../components/DesktopNavigation";
+import DesktopSidebar from "../components/DesktopSidebar";
 import ReplyForm from "../components/ReplyForm";
 
 // [TODO] Authentication
@@ -57,7 +57,7 @@ export default function HealthPage() {
 
   return (
     <article>
-      <DesktopNavigation user={user} active={"home"} setPopped={setPopped} />
+      <DesktopNavigation user={user} active={"health"} setPopped={setPopped} />
       <div className="content">
         <ActivityForm
           popped={popped}

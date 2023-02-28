@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
@@ -22,8 +22,9 @@ cors = CORS(
     resources={r"/api/*": {"origins": origins}},
     expose_headers="location,link",
     allow_headers="content-type,if-modified-since",
-    methods="OPTIONS,GET,HEAD,POST"
-)
+    methods="OPTIONS,GET,HEAD,POST",
+    allow_credentials=True
+)  # added last line
 
 
 @app.route('/health')
@@ -34,6 +35,30 @@ def health():
 @app.route("/checkEnvVars", methods=['GET'])
 def checkEnvVars():
     return frontend + " " + backend, 200
+
+
+@app.route('/users')
+def users():
+    return jsonify({'users': ['Alice', 'Bob', 'Charlie']})
+
+
+@app.route("/api/routes", methods=['GET'])
+def routes():
+    """This route shows all available routes"""
+    routes = []
+    for rule in app.url_map.iter_rules():
+        route = {
+            'url': str(rule),
+            'methods': list(rule.methods),
+            'endpoint': rule.endpoint
+        }
+        routes.append(route)
+    data = jsonify(routes)
+    return data, 200
+    # data = jsonify({'routes': routes})   # react version
+    # # return jsonify({'routes': routes}), 200  # json version
+    # # data = HomeActivities.run()
+    # return data, 200                     # react html version
 
 
 @app.route("/api/message_groups", methods=['GET'])
@@ -99,7 +124,7 @@ def data_search():
         return model['errors'], 422
     else:
         return model['data'], 200
-    return
+    # return
 
 
 @app.route("/api/activities", methods=['POST', 'OPTIONS'])
@@ -113,7 +138,7 @@ def data_activities():
         return model['errors'], 422
     else:
         return model['data'], 200
-    return
+    # return
 
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
@@ -132,7 +157,31 @@ def data_activities_reply(activity_uuid):
         return model['errors'], 422
     else:
         return model['data'], 200
-    return
+    # return
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    """This route shows all available routes"""
+    data = []
+    warning = f"You entered '{path}'. This URL does not have a rule. Please return home. 🏘️🏡🐱🐈😹🐈‍⬛🐶🐕🦮🐕‍🦺 For your convenience we have provided the API routes that are available below as a reference guide."
+    for rule in app.url_map.iter_rules():
+        # route = {
+        #     # 'url': str(rule),
+        #     # 'methods': list(rule.methods),
+        #     'endpoint': rule.endpoint
+        # }
+        # data.append(route)
+        data.append(rule.endpoint)
+    # json version
+    return jsonify({'path': warning, 'routes': data}), 200
+
+    # @app.route('/')
+    # def home():
+    #     # data = HomeActivities.run()
+    #     # return data, 200
+    #     return 'Welcome Home!🏠🏘️🏡🐱🐈😹🐈‍⬛🐶🐕🦮🐕‍🦺', 200
 
 
 if __name__ == "__main__":
