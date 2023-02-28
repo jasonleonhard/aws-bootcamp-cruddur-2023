@@ -176,6 +176,21 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Activity"
+  /api/activities/notifications:
+    get:
+      description: "List all notifications"
+      tags:
+        - activities
+      responses:
+        "200":
+          description: Returns an array of notification activities"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
 components:
   schemas:
     Activity:
@@ -186,7 +201,7 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Andrew Brown"
+          example: "Jason Leonhard"
         handle:
           type: string
           example: "jasonleonhard"
@@ -244,7 +259,7 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Andrew Brown"
+          example: "Jason Leonhard"
         handle:
           type: string
           example: "jasonleonhard"

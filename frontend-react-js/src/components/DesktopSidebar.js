@@ -12,7 +12,7 @@ export default function DesktopSidebar(props) {
     { hashtag: "FreeWillyReboot", count: 7753 },
   ];
 
-  const users = [{ display_name: "Andrew Brown", handle: "jasonleonhard" }];
+  const users = [{ display_name: "Jason Leonhard", handle: "jasonleonhard" }];
 
   let trending;
   if (props.user) {

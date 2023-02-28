@@ -12,7 +12,7 @@ class MessageGroups:
         results = [
             {
                 'uuid': '24b95582-9e7b-4e0a-9ad1-639773ab7552',
-                'display_name': 'Andrew Brown',
+                'display_name': 'Jason Leonhard',
                 'handle':  'jasonleonhard',
                 'created_at': now.isoformat()
             },

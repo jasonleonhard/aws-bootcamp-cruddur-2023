@@ -5,6 +5,7 @@ import HealthPage from "./pages/HealthPage";
 import HomeFeedPage from "./pages/HomeFeedPage";
 import MessageGroupPage from "./pages/MessageGroupPage";
 import MessageGroupsPage from "./pages/MessageGroupsPage";
+import NotificationsPage from "./pages/NotificationsPage";
 import RecoverPage from "./pages/RecoverPage";
 import RoutesPage from "./pages/RoutesPage";
 import SignInPage from "./pages/SignInPage";
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
     element: <SignupPage />,
   },
   {
-    path: "/signin",
+    path: "/signIn",
     element: <SignInPage />,
   },
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot",
     element: <RecoverPage />,
+  },
+  {
+    path: "/notifications",
+    element: <NotificationsPage />,
   },
 ]);
 
