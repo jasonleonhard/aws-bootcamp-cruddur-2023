@@ -44,7 +44,7 @@ paths:
                   $ref: "#/components/schemas/Activity"
   /api/activities:
     post:
-      description: Create a new activitiy eg. Creating a Crud
+      description: Create a new activity eg. Creating a Crud
       tags:
         - activities
       requestBody:
@@ -148,7 +148,34 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Message"
-
+  /api/:
+    get:
+      description: "List all routes"
+      tags:
+        - routes
+      responses:
+        "200":
+          description: Returns an array of routes"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+  /api/routes:
+    get:
+      description: "List all routes"
+      tags:
+        - routes
+      responses:
+        "200":
+          description: Returns an array of routes"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
 components:
   schemas:
     Activity:
