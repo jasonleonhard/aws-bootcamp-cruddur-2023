@@ -22,7 +22,7 @@ export default function RoutesPage() {
       });
       let resJson = await res.json();
       if (res.status === 200) {
-        console.log(resJson);
+        // console.log(resJson);
         setRoutes(resJson);
       } else {
         console.log(res);
