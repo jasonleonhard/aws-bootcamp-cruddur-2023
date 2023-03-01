@@ -64,7 +64,7 @@ def routes():
 
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
-    user_handle = 'Jason'
+    user_handle = 'jasonleonhard'
     model = MessageGroups.run(user_handle=user_handle)
     if model['errors'] is not None:
         return model['errors'], 422
@@ -74,7 +74,7 @@ def data_message_groups():
 
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
 def data_messages(handle):
-    user_sender_handle = 'Jason'
+    user_sender_handle = 'jasonleonhard'
     user_receiver_handle = request.args.get('user_receiver_handle')
 
     model = Messages.run(user_sender_handle=user_sender_handle,
@@ -89,7 +89,7 @@ def data_messages(handle):
 @app.route("/api/messages", methods=['POST', 'OPTIONS'])
 @cross_origin()
 def data_create_message():
-    user_sender_handle = 'Jason'
+    user_sender_handle = 'jasonleonhard'
     user_receiver_handle = request.json['user_receiver_handle']
     message = request.json['message']
 
@@ -138,7 +138,7 @@ def data_search():
 @app.route("/api/activities", methods=['POST', 'OPTIONS'])
 @cross_origin()
 def data_activities():
-    user_handle = 'Jason'
+    user_handle = 'jasonleonhard'
     message = request.json['message']
     ttl = request.json['ttl']
     model = CreateActivity.run(message, user_handle, ttl)
@@ -158,7 +158,7 @@ def data_show_activity(activity_uuid):
 @app.route("/api/activities/<string:activity_uuid>/reply", methods=['POST', 'OPTIONS'])
 @cross_origin()
 def data_activities_reply(activity_uuid):
-    user_handle = 'Jason'
+    user_handle = 'jasonleonhard'
     message = request.json['message']
     model = CreateReply.run(message, user_handle, activity_uuid)
     if model['errors'] is not None:
@@ -175,21 +175,17 @@ def catch_all(path):
     data = []
     warning = f"You entered '{path}'. This URL does not have a rule. Please return home. 🏘️🏡🐱🐈😹🐈‍⬛🐶🐕🦮🐕‍🦺 For your convenience we have provided the API routes that are available below as a reference guide."
     for rule in app.url_map.iter_rules():
-        # route = {
-        #     # 'url': str(rule),
-        #     # 'methods': list(rule.methods),
-        #     'endpoint': rule.endpoint
-        # }
-        # data.append(route)
         data.append(rule.endpoint)
-    # json version
     return jsonify({'path': warning, 'routes': data}), 200
 
-    # @app.route('/')
-    # def home():
-    #     # data = HomeActivities.run()
-    #     # return data, 200
-    #     return 'Welcome Home!🏠🏘️🏡🐱🐈😹🐈‍⬛🐶🐕🦮🐕‍🦺', 200
+
+# @app.route('/home')
+# def home():
+#     data = HomeActivities.run()
+#     # return data, 200
+#     # return 'Welcome Home!🏠🏘️🏡🐱🐈😹🐈‍⬛🐶🐕🦮🐕‍🦺', 200
+#     data = jsonify('Welcome Home!🏠🏘️🏡🐱🐈😹🐈‍⬛🐶🐕🦮🐕‍🦺')
+#     return data, 200
 
 
 if __name__ == "__main__":

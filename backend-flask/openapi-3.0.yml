@@ -277,7 +277,7 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Worf"
+          example: "YourFriend"
         handle:
           type: string
-          example: "worf"
+          example: "YourFriend"
