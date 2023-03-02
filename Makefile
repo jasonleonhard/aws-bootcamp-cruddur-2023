@@ -5,23 +5,43 @@ help:
 todo:
 	echo "activity_avatar not showing user"
 
+open-docker:
+	open -a /Applications/Docker.app
+	echo "Note Docker Desktop App takes time to open and initialize be please be patient"
+	# sleep 30
+
 docker-helper:
 	make open-docker
+	echo "if docker is not opening or not respoding consider killing it"
 	psql -h localhost # bc docker containerized
 	echo "# consider removing images # docker image prune -a -f ; docker images"
+
+open-browsers:
+	open -a 'google chrome' http://localhost:3000/
+	# open -a 'google chrome' http://localhost:4567/
+	open -a 'google chrome' http://localhost:4567/api/activities/home
+	# open -a 'google chrome' http://localhost:4567/api/activities/notifications
 
 flags:
 	echo "-s = silent"
 
-set:
-	export $(cat .env | xargs)
+set-env:
+	# each level can be set individually via 	export $(cat .env | xargs)
+	# then checked via 							env | grep -i honey # or other variable
+	# ignore bash: export: `#': not a valid identifier
+	cd backend-flask \
+	export $(cat .env | xargs) \
+	cd ..
 
 check:
 	cat .env
 
-
 install-back:
+	# Defaulting to user installation because normal site-packages is not writeable
 	pip install -r ./backend-flask/requirements.txt
+	/Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pi
+	# python3.11 -m pip install --upgrade pip # pip==21.0.1 to pip==21.3.1
+	python3 -m pip install --upgrade pip # pip==21.0.1 to pip==21.3.1
 
 install-front:
 	# this presumes you have already setup nvm such as # nvm install --lts; nvm use --lts; node -v; # v18.14.1
@@ -37,11 +57,6 @@ install-front:
 reinstall-front:
 	rm -rf node_modules; \
 	npm i;
-
-open-docker:
-	open -a /Applications/Docker.app
-	echo "Note Docker Desktop App takes time to open and initialize be please be patient"
-	# sleep 30
 
 open-endpoint:
 	open http://localhost:4567/api/activities/home
@@ -59,7 +74,7 @@ run-back:
 
 dev:
 	# make -s open-docker && make -s build-back && make -s open-endpoint && make -s run
-	make -s set && make -s install-back && make -s install-front && make -s build-front && make -s open-endpoint && make -s open-docker && make -s build-back && make -s run-back 		# && make -s run-front
+	make -s set-env && make -s install-back && make -s install-front && make -s build-front && make -s open-endpoint && make -s open-docker && make -s build-back && make -s run-back 		# && make -s run-front
 
 front:
 	open http://localhost:3000
