@@ -1,5 +1,14 @@
 help:
 	echo "available commands" && cat Makefile | grep ":" |  grep -v help | xargs
+	echo "you must signin to see all content"
+
+todo:
+	echo "activity_avatar not showing user"
+
+docker-helper:
+	make open-docker
+	psql -h localhost # bc docker containerized
+	echo "# consider removing images # docker image prune -a -f ; docker images"
 
 flags:
 	echo "-s = silent"
