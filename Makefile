@@ -37,12 +37,13 @@ honeycomb:
 	pip intall --upgrade pip
 
 set-env:
-	# each level can be set individually via 	export $(cat .env | xargs)
+	# each level can be set individually via
+	export $(cat .env | grep -v "^#" | xargs)
 	# then checked via 							env | grep -i honey # or other variable
 	# ignore bash: export: `#': not a valid identifier
-	cd backend-flask \
-	export $(cat .env | xargs) \
-	cd ..
+	# cd backend-flask \
+	# export $(cat .env | grep -v "^#" | xargs) \
+	# cd ..
 
 check:
 	cat .env
