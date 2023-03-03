@@ -25,6 +25,17 @@ open-browsers:
 flags:
 	echo "-s = silent"
 
+honeycomb:
+	echo "https://ui.honeycomb.io/jl-2c/environments/bootcamp/send-data#"
+	pip install opentelemetry-api \
+		opentelemetry-sdk \
+		opentelemetry-exporter-otlp-proto-http \
+		opentelemetry-instrumentation-flask \
+		opentelemetry-instrumentation-requests
+	# [notice] A new release of pip available: 22.3.1 -> 23.0.1
+	# [notice] To update, run: pip install --upgrade pip
+	pip intall --upgrade pip
+
 set-env:
 	# each level can be set individually via 	export $(cat .env | xargs)
 	# then checked via 							env | grep -i honey # or other variable
