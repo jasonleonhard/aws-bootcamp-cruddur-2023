@@ -63,3 +63,6 @@ networks:
 volumes:
   db:
     driver: local
+
+# trivial change added to verify my git user name and email is properly updated
+c
