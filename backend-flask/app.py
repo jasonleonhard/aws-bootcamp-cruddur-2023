@@ -40,9 +40,19 @@ tracer = trace.get_tracer(__name__)
 app = Flask(__name__)
 
 # x-ray
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
-XRayMiddleware(app, xray_recorder)
+try:
+    xray_url = os.getenv("AWS_XRAY_URL")
+    print(xray_url)
+except:
+    print("An exception occurred:", xray_url)
+
+try:
+    xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+    XRayMiddleware(app, xray_recorder)
+except:
+    print("An exception occurred")
+    print()
+
 
 # honeycomb.io Initialize automatic instrumentation with Flask
 FlaskInstrumentor().instrument_app(app)

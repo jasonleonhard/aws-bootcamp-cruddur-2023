@@ -53,17 +53,19 @@ services:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
   xray-daemon:
-      image: "amazon/aws-xray-daemon"
-      env_file:
-      - .env
-      # environment:
-      #   AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-      #   AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-      #   AWS_REGION: "${AWS_REGION}"
-      command:
-        - "xray -o -b xray-daemon:2000"
-      ports:
-        - 2000:2000/udp
+    image: "amazon/aws-xray-daemon"
+    # env_file:
+    # - .env
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_REGION: "${AWS_REGION}"
+      AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
+      AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
+    command:
+      - "xray -o -b xray-daemon:2000"
+    ports:
+      - 2000:2000/udp
 
 
 # the name flag is a hack to change the default prepend folder

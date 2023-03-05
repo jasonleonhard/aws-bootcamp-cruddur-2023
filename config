@@ -1,0 +1,10 @@
+[default]
+region=us-east-1
+output=json
+
+[profile my-profile]
+region=us-east-1
+output=yaml
+
+[profile vscode]
+region=us-east-1
