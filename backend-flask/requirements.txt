@@ -1,5 +1,6 @@
 pip==23.0.1
 
+# core
 flask
 flask-cors
 python-dotenv
@@ -11,9 +12,8 @@ opentelemetry-exporter-otlp-proto-http
 opentelemetry-instrumentation-flask
 opentelemetry-instrumentation-requests
 
+# xray
 aws-xray-sdk
 
 # CloudWatch Logs
-# watchtower
-
-
+watchtower
