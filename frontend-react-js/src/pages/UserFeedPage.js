@@ -50,8 +50,13 @@ export default function UserFeedPage() {
     // [TODO] Authentication
     if (Cookies.get("user.logged_in")) {
       setUser({
+        // me
         display_name: Cookies.get("user.name"),
         handle: Cookies.get("user.username"),
+        // other
+        // TODO: currently setting below shows My Name, @handle not what we see below
+        // display_name: Cookies.get("Worf"),
+        // handle: Cookies.get("@worf"),
       });
     }
   };

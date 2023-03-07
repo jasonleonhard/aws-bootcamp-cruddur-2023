@@ -29,7 +29,9 @@ const router = createBrowserRouter([
     path: "/health",
     element: <HealthPage />,
   },
-  // WIP: only seeing @jasonleonhard at top of page but no content below
+  // TODO: only seeing @jasonleonhard content below regardless of url user handle (i.e. both below same)
+  // https://3000-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/@jasonleonhard
+  // https://3000-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/@worf
   {
     path: "/@:handle",
     element: <UserFeedPage />,

@@ -1,3 +1,36 @@
+# from datetime import datetime, timedelta, timezone
+
+
+# class MessageGroups:
+#     def run(user_handle):
+#         model = {
+#             'errors': None,
+#             'data': None
+#         }
+
+#         now = datetime.now(timezone.utc).astimezone()
+#         results = [
+#             {
+#                 'uuid': '24b95582-9e7b-4e0a-9ad1-639773ab7552',
+#                 # 'display_name': 'Jason Leonhard',
+#                 # 'handle':  'jasonleonhard',
+#                 'display_name': 'Jason Leonhard',
+#                 'handle':  'jasonleonhard',
+#                 'created_at': now.isoformat()
+#             },
+#             {
+#                 'uuid': '417c360e-c4e6-4fce-873b-d2d71469b4ac',
+#                 # 'display_name': 'YourFriend',
+#                 # 'handle':  'YourFriend',
+#                 'display_name': 'Worf',
+#                 'handle':  'worf',
+#                 'created_at': now.isoformat()
+#             }]
+#         model['data'] = results
+#         return model
+
+
+
 from datetime import datetime, timedelta, timezone
 
 
@@ -28,8 +61,8 @@ class MessageGroups:
                 'handle':  'worf',
                 'user_handle':  '@worf',
                 # 'created_at': now.isoformat()
-                'created_at': (now - timedelta(days=7)).isoformat(),
-                'expires_at': (now + timedelta(days=9)).isoformat(),
+                'created_at': (now - timedelta(days=3)).isoformat(),
+                'expires_at': (now + timedelta(days=7)).isoformat(),
                 'likes_count': 5,
                 'replies_count': 1,
                 'reposts_count': 0,

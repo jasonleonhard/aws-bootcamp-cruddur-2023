@@ -227,7 +227,7 @@ class NotificationsActivities:
 #             }],
 #         },
 #             {
-#             'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+#             'uuid': '38f126b0-1ceb-4a33-88be-d90fa7109ee3',
 #             'handle': 'Jason Leonhard',
 #             'message': 'Other messages to be added at a later date',
 #             'created_at': created_at_hours(1),

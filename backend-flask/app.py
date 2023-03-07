@@ -105,17 +105,19 @@ def routes():
 
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
-    user_handle = 'jasonleonhard'
+    user_handle = 'jasonleonhard' # outputs data endpoint # required currently
+    # user_handle = '@jasonleonhard' # idk looks same 
     model = MessageGroups.run(user_handle=user_handle)
     if model['errors'] is not None:
         return model['errors'], 422
     else:
         return model['data'], 200
 
-
+# was
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
 def data_messages(handle):
-    user_sender_handle = 'jasonleonhard'
+    # user_sender_handle = 'jasonleonhard'
+    user_sender_handle = handle
     user_receiver_handle = request.args.get('user_receiver_handle')
     model = Messages.run(user_sender_handle=user_sender_handle,
                          user_receiver_handle=user_receiver_handle)
@@ -124,6 +126,29 @@ def data_messages(handle):
     else:
         return model['data'], 200
     return
+# now 
+# @app.route("/api/messages/@<string:user_handle>", methods=['GET'])
+# def data_messages(user_handle):
+#     # user_activities = UserActivities(request)
+#     # messages = Messages(request)
+#     # model = user_activities.run(user_handle=user_handle)
+
+#     # user_sender_user_handle = 'jasonleonhard'
+#     # user_receiver_user_handle = request.args.get('user_handle')
+#     # user_receiver_user_handle = request.args.get('sender_handle')
+    
+#     # user_sender_handle = user_handle
+#     user_handle = 'jasonleonhard'
+#     user_receiver_handle = request.args.get('user_receiver_handle')
+#     model = Messages.run(user_sender_handle=user_sender_handle,
+#                          user_receiver_handle=user_receiver_handle)
+#     if model['errors'] is not None:
+#         return model['errors'], 422
+#     else:
+#         return model['data'], 200
+#     return
+
+
 
 
 @app.route("/api/messages", methods=['POST', 'OPTIONS'])

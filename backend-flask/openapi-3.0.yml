@@ -314,9 +314,9 @@ components:
         handle:
           type: string
           example: "worf"
-        # message:
-        #   type: string
-        #   example: "Who likes pineapple on their pizza?"
+        message:
+          type: string
+          example: "Who likes pineapple on their pizza?"
         created_at:
           type: string
           example: "2023-02-06T18:11:03+00:00"
