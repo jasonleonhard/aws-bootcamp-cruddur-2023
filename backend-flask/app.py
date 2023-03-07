@@ -104,6 +104,7 @@ def routes():
 
 
 @app.route("/api/message_groups", methods=['GET'])
+# @xray_recorder.capture('message_groups')
 def data_message_groups():
     user_handle = 'jasonleonhard' # outputs data endpoint # required currently
     # user_handle = '@jasonleonhard' # idk looks same 
@@ -115,6 +116,7 @@ def data_message_groups():
 
 # was
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
+# @xray_recorder.capture('messages/@<string:handle>')
 def data_messages(handle):
     # user_sender_handle = 'jasonleonhard'
     user_sender_handle = handle
@@ -152,6 +154,7 @@ def data_messages(handle):
 
 
 @app.route("/api/messages", methods=['POST', 'OPTIONS'])
+# @xray_recorder.capture('messages')
 @cross_origin()
 def data_create_message():
     user_sender_handle = 'jasonleonhard'
@@ -167,12 +170,14 @@ def data_create_message():
 
 
 @app.route("/api/activities/home", methods=['GET'])
+# # @xray_recorder.capture('home')
 def data_home():
     data = HomeActivities.run()
     return data, 200
 
 
 @app.route("/api/activities/notifications", methods=['GET'])
+# @xray_recorder.capture('notifications')
 def data_notifications():
     # data = HomeActivities.run()
     data = NotificationsActivities.run()
@@ -193,6 +198,9 @@ def data_notifications():
 #
 # This returns data on the backend and appears to also render something on the frontend
 @app.route("/api/activities/@<string:user_handle>", methods=['GET'])
+# @xray_recorder.capture('user_activities')
+@xray_recorder.capture('activities_users')
+# @xray_recorder.capture('activities_user')
 def data_user_handle(user_handle):
     user_activities = UserActivities(request)
     model = user_activities.run(user_handle=user_handle)
@@ -299,6 +307,7 @@ def data_user_handle(user_handle):
 
 
 @app.route("/api/activities/search", methods=['GET'])
+# @xray_recorder.capture('search')
 def data_search():
     term = request.args.get('term')
     model = SearchActivities.run(term)
@@ -311,6 +320,9 @@ def data_search():
 
 @app.route("/api/activities", methods=['POST', 'OPTIONS'])
 @cross_origin()
+# @xray_recorder.capture('user_activities')
+# @xray_recorder.capture('activities_users')
+# @xray_recorder.capture('activities')
 def data_activities():
     user_handle = 'jasonleonhard'
     message = request.json['message']
@@ -324,12 +336,18 @@ def data_activities():
 
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
+# @xray_recorder.capture('user_activities')
+# @xray_recorder.capture('activities_users')
+# @xray_recorder.capture('activities')
 def data_show_activity(activity_uuid):
     data = ShowActivity.run(activity_uuid=activity_uuid)
     return data, 200
 
 
 @app.route("/api/activities/<string:activity_uuid>/reply", methods=['POST', 'OPTIONS'])
+# @xray_recorder.capture('user_activities')
+# @xray_recorder.capture('activities_users')
+# @xray_recorder.capture('activities')
 @cross_origin()
 def data_activities_reply(activity_uuid):
     user_handle = 'jasonleonhard'
@@ -343,6 +361,7 @@ def data_activities_reply(activity_uuid):
 
 
 @app.route('/', defaults={'path': ''})
+# @xray_recorder.capture('path')
 @app.route('/<path:path>')
 def catch_all(path):
     """This route shows all available routes"""

@@ -58,14 +58,17 @@ services:
     image: "amazon/aws-xray-daemon"
     env_file:
     - .env
-    environment:
-      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-      AWS_REGION: "${AWS_REGION}"
-      AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
-      AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
+    # environment:
+    #   AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+    #   AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+    #   AWS_REGION: "${AWS_REGION}"
+    #   AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
+    #   AWS_XRAY_DAEMON_ADDRESS: "${AWS_XRAY_DAEMON_ADDRESS}"
+    #   # AWS_XRAY_URL: "https://2000-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io"
+    #   # AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
     command:
-      - "xray -o -b xray-daemon:2000"
+      - "xray -o -b xray-daemon:2000" # do not check ec2 instance metadata and bind to address
+      # - "xray -o -b xray-daemon:2000 -l=debug" # also debug level
     ports:
       - 2000:2000/udp
 

@@ -1,11 +1,7 @@
-# when at https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/activities/@jasonleonhard
-# "exception.message": "UserActivities.run() missing 1 required positional argument: 'user_handle'",
-
 import os
 from datetime import datetime, timedelta, timezone
 # import XRay SDK libraries
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.core import patch_all
+from aws_xray_sdk.core import xray_recorder, patch_all
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 
