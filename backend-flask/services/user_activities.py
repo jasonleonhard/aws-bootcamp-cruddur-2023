@@ -47,7 +47,10 @@ class UserActivities:
                         'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
                         'handle':  'jasonleonhard',
                         'user_handle':  '@jasonleonard',
-                        'message': 'Cloud is fun!',
+                        'message': 'Cloud is fun they say!',
+                        'likes_count': 5,
+                        'replies_count': 1,
+                        'reposts_count': 2,
                         'created_at': (now - timedelta(days=1)).isoformat(),
                         'expires_at': (now + timedelta(days=31)).isoformat()
                     }]

@@ -6,15 +6,21 @@ class ShowActivities:
         now = datetime.now(timezone.utc).astimezone()
         results = [{
             'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
-            'handle':  'Jason Leonhard',
-            'message': 'Cloud is fun!',
+            'display_name': 'Jason Leonhard',
+            'handle':  'jasonleonhard',
+            'user_handle': '@jasonleonhard',
+            'message': 'Cloud is fun? maybe!',
             'created_at': (now - timedelta(days=2)).isoformat(),
             'expires_at': (now + timedelta(days=5)).isoformat(),
+            'likes_count': 5,
+            'replies_count': 1,
+            'reposts_count': 2,
             'replies': {
                 'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea67',
                 'handle':  'worf',
                 'message': 'This post has no honor!',
-                'created_at': (now - timedelta(days=2)).isoformat()
-            }
+                'created_at': (now - timedelta(days=2)).isoformat(),
+                'expires_at': (now + timedelta(days=5)).isoformat()
+            },
         }]
         return results

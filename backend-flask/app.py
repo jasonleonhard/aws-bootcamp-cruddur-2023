@@ -4,16 +4,17 @@ from flask_cors import CORS, cross_origin
 import os
 import requests
 
+from services.home_activities import *
 from services.create_activity import *
 from services.create_message import *
 from services.create_reply import *
-from services.home_activities import *
 from services.message_groups import *
 from services.messages import *
 from services.notifications_activities import *
 from services.search_activities import *
 from services.show_activity import *
 from services.user_activities import *
+from services.home_activities import *
 
 # x-ray
 from aws_xray_sdk.core import xray_recorder
