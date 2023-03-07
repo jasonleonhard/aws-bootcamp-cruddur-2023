@@ -1,19 +1,23 @@
 pip==23.0.1
 
-# core
+# CORE
 flask
 flask-cors
 python-dotenv
 
-# honeycomb.io
+# HONEYCOMB.IO
 opentelemetry-api
 opentelemetry-sdk
 opentelemetry-exporter-otlp-proto-http
 opentelemetry-instrumentation-flask
 opentelemetry-instrumentation-requests
 
-# xray
+# XRAY
 aws-xray-sdk
 
 # CloudWatch logs and WatchTower
 # watchtower
+
+# ROLLBAR
+blinker
+rollbar

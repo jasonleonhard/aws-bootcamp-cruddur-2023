@@ -154,3 +154,78 @@ https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#xray:t
     in the future I can look at these files for ease of re-setup
 
     .env, requirements.txt, app.py, home_activities.py
+
+# ROLLBAR SECTION 
+
+### sign-in to console
+
+https://app.rollbar.com/onboarding
+
+choose flask
+
+### requirements.txt needs both
+
+blinker
+rollbar
+
+
+@app.before_first_request
+def init_rollbar():
+    ROLLBAR_ACCESS_TOKEN = os.getenv("ROLLBAR_ACCESS_TOKEN")
+    """init rollbar module"""
+    rollbar.init(
+        # access token
+        ROLLBAR_ACCESS_TOKEN,
+        # environment name
+        'production',
+        # server root directory, makes tracebacks prettier
+        root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
+        allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+
+@app.route('/rollbar/test')
+def rollbar_test():
+    rollbar.report_message('rollbar.report_message here and https://rollbar.com/awswell/all/items', 'warning')
+    return "RollBar Test Route returns fine"
+
+
+
+https://rollbar.com/awswell/FirstProject/items/4/
+
+
+
+192.168.82.71 - - [07/Mar/2023 07:44:31] "GET /rollbar/test HTTP/1.1" 200 -
+{
+    "name": "HTTP POST",
+    "context": {
+        "trace_id": "0x678050f050d6a98e03f3441bcf68746a",
+        "span_id": "0x8b1b91eda387a541",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.CLIENT",
+    "parent_id": null,
+    "start_time": "2023-03-07T07:44:31.926682Z",
+    "end_time": "2023-03-07T07:44:32.067089Z",
+    "status": {
+        "status_code": "UNSET"
+    },
+    "attributes": {
+        "http.method": "POST",
+        "http.url": "https://api.rollbar.com/api/1/item/",
+        "http.status_code": 200
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "telemetry.sdk.language": "python",
+            "telemetry.sdk.name": "opentelemetry",
+            "telemetry.sdk.version": "1.16.0",
+            "service.name": "backend-flask"
+        },
+        "schema_url": ""
+    }
+}
