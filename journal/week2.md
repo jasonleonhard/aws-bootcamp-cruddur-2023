@@ -131,16 +131,26 @@ https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#xray:t
 # CLOUD WATCH LOGS SECTION 
 
 ### directions
-https://pypi.org/project/watchtower/
+
+  https://pypi.org/project/watchtower/
 
 ### install
-pip install watchtower
+
+  pip install watchtower
 
 ### hit endpoint
-https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/messages/@jasonleonhard
+
+  https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/messages/@jasonleonhard
 
 ### aws console
-https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#
-https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
-https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/cruddur
-https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/cruddur/log-events/48c7c3872689$252F$252Fusr$252Flocal$252Flib$252Fpython3.10$252Fsite-packages$252Fflask$252F__main__.py$252Fapp$252F28
+
+  https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#
+  https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
+  https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/cruddur
+  https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/cruddur/log-events/48c7c3872689$252F$252Fusr$252Flocal$252Flib$252Fpython3.10$252Fsite-packages$252Fflask$252F__main__.py$252Fapp$252F28
+
+### for spend considerations I have now disabled CloudWatch logs and WatchTower
+
+    in the future I can look at these files for ease of re-setup
+
+    .env, requirements.txt, app.py, home_activities.py
