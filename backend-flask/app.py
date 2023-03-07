@@ -4,6 +4,17 @@ from flask_cors import CORS, cross_origin
 import os
 import requests
 
+from flask import Flask
+app = Flask(__name__)
+
+# ROLLBAR
+## Rollbar init code. You'll need the following to use Rollbar with Flask.
+## This requires the 'blinker' package to be installed
+# import os
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
+
 from services.home_activities import *
 from services.create_activity import *
 from services.create_message import *
@@ -69,7 +80,6 @@ try:
 except:
     print("An exception occurred")
 
-
 # honeycomb.io Initialize automatic instrumentation with Flask
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
@@ -87,13 +97,30 @@ cors = CORS(
     allow_credentials=True
 )  # added last line
 
-
 # CloudWatch logs and WatchTower
 # @app.after_request
 # def after_request(response):
 #     timestamp = strftime('[%Y-%b-%d %H:%M]')
 #     LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
 #     return response
+
+# ROLLBAR
+@app.before_first_request
+def init_rollbar():
+    ROLLBAR_ACCESS_TOKEN = os.getenv("ROLLBAR_ACCESS_TOKEN")
+    """init rollbar module"""
+    rollbar.init(
+        # access token
+        ROLLBAR_ACCESS_TOKEN,
+        # environment name
+        'production',
+        # server root directory, makes tracebacks prettier
+        root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
+        allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 
 
 @app.route('/health')
@@ -129,8 +156,8 @@ def routes():
 @app.route("/api/message_groups", methods=['GET'])
 # @xray_recorder.capture('message_groups')
 def data_message_groups():
-    user_handle = 'jasonleonhard' # outputs data endpoint # required currently
-    # user_handle = '@jasonleonhard' # idk looks same 
+    user_handle = 'jasonleonhard'  # outputs data endpoint # required currently
+    # user_handle = '@jasonleonhard' # idk looks same
     model = MessageGroups.run(user_handle=user_handle)
     if model['errors'] is not None:
         return model['errors'], 422
@@ -151,7 +178,7 @@ def data_messages(handle):
     else:
         return model['data'], 200
     return
-# now 
+# now
 # @app.route("/api/messages/@<string:user_handle>", methods=['GET'])
 # def data_messages(user_handle):
 #     # user_activities = UserActivities(request)
@@ -161,7 +188,7 @@ def data_messages(handle):
 #     # user_sender_user_handle = 'jasonleonhard'
 #     # user_receiver_user_handle = request.args.get('user_handle')
 #     # user_receiver_user_handle = request.args.get('sender_handle')
-    
+
 #     # user_sender_handle = user_handle
 #     user_handle = 'jasonleonhard'
 #     user_receiver_handle = request.args.get('user_receiver_handle')
@@ -172,8 +199,6 @@ def data_messages(handle):
 #     else:
 #         return model['data'], 200
 #     return
-
-
 
 
 @app.route("/api/messages", methods=['POST', 'OPTIONS'])
@@ -394,6 +419,22 @@ def catch_all(path):
     for rule in app.url_map.iter_rules():
         data.append(rule.endpoint)
     return jsonify({'path': warning, 'routes': data}), 200
+
+
+# ROLLBAR
+@app.route('/hello')
+def hello():
+    print("in hello")
+    # x = None
+    # x[5]
+    return "Hello World!"
+
+
+# ROLLBAR
+@app.route('/rollbar/test')
+def rollbar_test():
+    rollbar.report_message('rollbar.report_message here and https://rollbar.com/awswell/all/items', 'warning')
+    return "RollBar Test Route returns fine"
 
 
 # @app.route('/home')
