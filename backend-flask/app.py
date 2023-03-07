@@ -28,21 +28,20 @@ from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExport
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor
 
-
 # CloudWatch logs and WatchTower
-import watchtower
-import logging
-from time import strftime
+# import watchtower
+# import logging
+# from time import strftime
 
 # Configuring Logger to Use CloudWatch
-LOGGER = logging.getLogger(__name__)
-LOGGER.setLevel(logging.DEBUG)
-console_handler = logging.StreamHandler()
-cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
-LOGGER.addHandler(console_handler)
-LOGGER.addHandler(cw_handler)
-# LOGGER.info("Test app.py log: just configed Logger to Use CloudWatch")
-LOGGER.info("HomeActivities")
+# LOGGER = logging.getLogger(__name__)
+# LOGGER.setLevel(logging.DEBUG)
+# console_handler = logging.StreamHandler()
+# cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+# LOGGER.addHandler(console_handler)
+# LOGGER.addHandler(cw_handler)
+# # LOGGER.info("Test app.py log: just configed Logger to Use CloudWatch")
+# LOGGER.info("HomeActivities")
 
 # honeycomb.io IInitialize tracing and an exporter that can send data to Honeycomb
 provider = TracerProvider()
@@ -90,11 +89,11 @@ cors = CORS(
 
 
 # CloudWatch logs and WatchTower
-@app.after_request
-def after_request(response):
-    timestamp = strftime('[%Y-%b-%d %H:%M]')
-    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
-    return response
+# @app.after_request
+# def after_request(response):
+#     timestamp = strftime('[%Y-%b-%d %H:%M]')
+#     LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+#     return response
 
 
 @app.route('/health')
@@ -196,8 +195,8 @@ def data_create_message():
 @app.route("/api/activities/home", methods=['GET'])
 # # @xray_recorder.capture('home')
 def data_home():
-    data = HomeActivities.run(logger=LOGGER) # CloudWatch logs and WatchTower
-    # data = HomeActivities.run()
+    # data = HomeActivities.run(logger=LOGGER) # CloudWatch logs and WatchTower
+    data = HomeActivities.run()
     return data, 200
 
 

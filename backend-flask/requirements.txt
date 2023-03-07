@@ -15,5 +15,5 @@ opentelemetry-instrumentation-requests
 # xray
 aws-xray-sdk
 
-# CloudWatch Logs
-watchtower
+# CloudWatch logs and WatchTower
+# watchtower

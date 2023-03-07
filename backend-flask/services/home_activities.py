@@ -64,17 +64,17 @@ from datetime import datetime, timedelta, timezone
 from opentelemetry import trace
 
 # CloudWatch logs and WatchTower
-import watchtower
-import logging
-from time import strftime
+# import watchtower
+# import logging
+# from time import strftime
 
 tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
-    # def run():
-    def run(logger): # CloudWatch logs and WatchTower
+    def run():
+        # def run(logger): # CloudWatch logs and WatchTower
         # LOGGER.info('Hello Cloudwatch! Home Activities from  /api/activities/home') # CloudWatch logs and WatchTower
-        logger.info("HomeActivities") # CloudWatch logs and WatchTower
+        # logger.info("HomeActivities") # CloudWatch logs and WatchTower
         with tracer.start_as_current_span("home-activites-mock-data"):
             span = trace.get_current_span()
             now = datetime.now(timezone.utc).astimezone()
