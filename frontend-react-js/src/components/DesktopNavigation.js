@@ -13,7 +13,7 @@ export default function DesktopNavigation(props) {
   if (props.user) {
     button = <CrudButton setPopped={props.setPopped} />;
     profile = <ProfileInfo user={props.user} />;
-    // profile = <ProfileInfo user={"YourFriend"} />;
+    // profile = <ProfileInfo user={"worf"} />;
     notificationsLink = (
       <DesktopNavigationLink
         url="/notifications"
@@ -30,23 +30,44 @@ export default function DesktopNavigation(props) {
         active={props.active}
       />
     );
-    profileLink = (
-      <DesktopNavigationLink
-        url="/@jasonleonhard"
-        name="Profile"
-        handle="profile"
-        active={props.active}
-      />
-    );
-    profileLink = (
-      <DesktopNavigationLink
-        url="/@YourFriend"
-        name="Profile"
-        handle="profile"
-        active={props.active}
-      />
-    );
+    profileLink = <DesktopNavigationLink 
+      url="/@jasonleonhard" 
+      name="Profile"
+      handle="profile"
+      active={props.active} />
   }
+    // profileLink = (
+    //   <DesktopNavigationLink
+    //     url="/@jasonleonhard"
+    //     name="Profile"
+    //     handle="profile"
+    //     active={props.active}
+    //   />
+    // );
+    // profileLink = (
+    //   <DesktopNavigationLink
+    //     url="/@worf"
+    //     name="Profile"
+    //     handle="profile"
+    //     active={props.active}
+    //   />
+    // );
+    // profileLink = (
+    //   <DesktopNavigationLink
+    //     url="/@worf"
+    //     name="Profile"
+    //     handle="profile"
+    //     active={props.active}
+    //   />
+    // );
+    // profileLink = (
+    //   <DesktopNavigationLink
+    //     url="/@jasonleonhard"
+    //     name="Profile"
+    //     handle="profile"
+    //     active={props.active}
+    //   />
+    // );
 
   return (
     <nav>

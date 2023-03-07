@@ -2,17 +2,18 @@ from flask import Flask, jsonify
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
+import requests
 
-from services.home_activities import *
-from services.notifications_activities import *
-from services.user_activities import *
 from services.create_activity import *
+from services.create_message import *
 from services.create_reply import *
-from services.search_activities import *
+from services.home_activities import *
 from services.message_groups import *
 from services.messages import *
-from services.create_message import *
+from services.notifications_activities import *
+from services.search_activities import *
 from services.show_activity import *
+from services.user_activities import *
 
 # x-ray
 from aws_xray_sdk.core import xray_recorder
@@ -51,7 +52,6 @@ try:
     XRayMiddleware(app, xray_recorder)
 except:
     print("An exception occurred")
-    print()
 
 
 # honeycomb.io Initialize automatic instrumentation with Flask
@@ -116,7 +116,6 @@ def data_message_groups():
 def data_messages(handle):
     user_sender_handle = 'jasonleonhard'
     user_receiver_handle = request.args.get('user_receiver_handle')
-
     model = Messages.run(user_sender_handle=user_sender_handle,
                          user_receiver_handle=user_receiver_handle)
     if model['errors'] is not None:
@@ -132,7 +131,6 @@ def data_create_message():
     user_sender_handle = 'jasonleonhard'
     user_receiver_handle = request.json['user_receiver_handle']
     message = request.json['message']
-
     model = CreateMessage.run(
         message=message, user_sender_handle=user_sender_handle, user_receiver_handle=user_receiver_handle)
     if model['errors'] is not None:
@@ -155,13 +153,123 @@ def data_notifications():
     return data, 200
 
 
-@app.route("/api/activities/@<string:handle>", methods=['GET'])
-def data_handle(handle):
-    model = UserActivities.run(handle)
+# # https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/activities/@jasonleonhard
+# OG BELOW
+# @app.route("/api/activities/@<string:handle>", methods=['GET'])
+# @xray_recorder.capture('user_activities')
+# def data_handle(handle):
+#     user_activities = UserActivities(request)
+#     model = UserActivities.run(handle)
+#     if model['errors'] is not None:
+#         return model['errors'], 422
+#     else:
+#         return model['data'], 200
+#
+# This returns data on the backend and appears to also render something on the frontend
+@app.route("/api/activities/@<string:user_handle>", methods=['GET'])
+def data_user_handle(user_handle):
+    user_activities = UserActivities(request)
+    model = user_activities.run(user_handle=user_handle)
     if model['errors'] is not None:
         return model['errors'], 422
     else:
         return model['data'], 200
+
+# # I can get data from this endpoint like so
+# @app.route("/api/activities/@<string:handle>", methods=['GET'])
+# # @xray_recorder.capture('user_activities')
+# # @cross_origin()
+# def data_handle(handle):
+#     return jsonify({'data': handle}), 200
+#     # return jsonify({'path': warning, 'routes': data}), 200
+# or with
+# @app.route("/api/activities/@<string:handle>", methods=['GET'])
+# def data_handle(handle):
+#     user_handle = "@" + handle
+#     return jsonify({'data': user_handle}), 200
+
+# @app.route("/api/activities/@<string:handle>", methods=['GET'])
+# @xray_recorder.capture('user_activities')
+# def data_handle(handle):
+#     user_handle = "@" + handle
+#     # user_handle = handle
+#     # TypeError: UserActivities.run() missing 1 required positional argument: 'user_handle'
+#     user_activities = UserActivities(request)
+#     # model = UserActivities.run(handle)
+#     # model = UserActivities.run(user_handle="@jasonleonhard")
+#     # model = UserActivities.run(user_handle=user_handle) # TypeError: UserActivities.run() missing 1 required positional argument: 'self'
+#     # model = UserActivities.run(self, user_handle=user_handle)
+#     model = UserActivities.run(user_handle=user_handle)
+
+#     if model['errors'] is not None:
+#         return model['errors'], 422
+#     else:
+#         return model['data'], 200
+#     # return jsonify({'data': user_handle}), 200
+
+# @app.route("/api/activities/@<string:handle>", methods=['GET'])
+# @xray_recorder.capture('user_activities')
+# def data_handle(handle):
+#     # return 'hi', 200
+
+#     user_activities = UserActivities(request)
+#     return user_activities, 200
+#     # return model['data'], 200
+#     # print(user_activities)
+#     model = UserActivities.run(handle)
+#     # return model, 200
+#     return model['data'], 200
+
+#     # user_handle = 'jasonleonhard' # added for now
+#     # if model['errors'] is not None:
+#     #     return model['errors'], 422
+#     # else:
+#     #     return model['data'], 200
+
+
+# @app.route("/api/activities/@<string:handle>", methods=['GET'])
+# # @xray_recorder.capture('user_activities')
+# # @cross_origin()
+# def data_handle(handle):
+#     # return jsonify({'path': warning, 'routes': data}), 200
+#     return jsonify({'data': handle}), 200
+#     # return model['data'], 200
+#     # return model[]
+
+#     # added below starts
+#     # handle = 'jasonleonhard'
+#     # user_receiver_handle = request.args.get('user_receiver_handle')
+#     # model = Messages.run(handle=handle,
+#     #                          user_receiver_handle=user_receiver_handle)
+#     # # added above ends
+#     # user_activities = UserActivities(request)
+#     # model = UserActivities.run(handle)
+#     # if model['errors'] is not None:
+#     #     return model['errors'], 422
+#     # else:
+#     #     return model['data'], 200
+
+# # examples below to help example above capture user_handle
+# # @app.route("/api/message_groups", methods=['GET'])
+# # def data_message_groups():
+# #     user_handle = 'jasonleonhard'
+# #     model = MessageGroups.run(user_handle=user_handle)
+# #     if model['errors'] is not None:
+# #         return model['errors'], 422
+# #     else:
+# #         return model['data'], 200
+
+# # @app.route("/api/messages/@<string:handle>", methods=['GET'])
+# # def data_messages(handle):
+# #     user_sender_handle = 'jasonleonhard'
+# #     user_receiver_handle = request.args.get('user_receiver_handle')
+# #     model = Messages.run(user_sender_handle=user_sender_handle,
+# #                          user_receiver_handle=user_receiver_handle)
+# #     if model['errors'] is not None:
+# #         return model['errors'], 422
+# #     else:
+# #         return model['data'], 200
+# #     return
 
 
 @app.route("/api/activities/search", methods=['GET'])
@@ -172,7 +280,7 @@ def data_search():
         return model['errors'], 422
     else:
         return model['data'], 200
-    # return
+    return
 
 
 @app.route("/api/activities", methods=['POST', 'OPTIONS'])
@@ -186,7 +294,7 @@ def data_activities():
         return model['errors'], 422
     else:
         return model['data'], 200
-    # return
+    return
 
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
@@ -205,7 +313,7 @@ def data_activities_reply(activity_uuid):
         return model['errors'], 422
     else:
         return model['data'], 200
-    # return
+    return
 
 
 @app.route('/', defaults={'path': ''})

@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 
 export default function ProfileInfo(props) {
   const [popped, setPopped] = React.useState(false);
+  // alert(JSON.stringify(Cookies))
 
   const click_pop = (event) => {
     setPopped(!popped);

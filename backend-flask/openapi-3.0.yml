@@ -6,6 +6,8 @@ info:
 servers:
   - url: https://api.server.test/v1
 paths:
+  # default for frontend /
+  # backend 
   /api/activities/home:
     get:
       description: "Return a feed of activity based on all users"
@@ -69,15 +71,19 @@ paths:
                 type: object
                 items:
                   $ref: "#/components/schemas/Activity"
-  /api/activities/@{handle}:
+  # not working yet bc user_handle is not being passed aka @jasonleonhard 
+  /api/activities/@{user_handle}:
     get:
       description: "Return a feed of activity for a specific user"
       tags:
         - activities
+      # now
+      # parameters: []
+      # was
       parameters:
-        - name: handle
+        - name: user_handle
           in: path
-          description: Handle (aka Username)
+          description: User handle (aka Username)
           required: true
           schema:
             type: string
@@ -104,6 +110,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/MessageGroup"
+
+  # https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/messages/@jasonleonhard
+  # /api/messages/@jasonleonhard
   /api/messages/@{handle}:
     get:
       description: "Returns private communication between two users"
@@ -125,6 +134,8 @@ paths:
                 type: object
                 items:
                   $ref: "#/components/schemas/Message"
+  
+  # https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/messages/@jasonleonhard
   /api/messages:
     post:
       description: "Create a direct message between two users"
@@ -148,6 +159,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Message"
+
+  # provides basics 
+  # // https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api
   /api/:
     get:
       description: "List all routes"
@@ -162,6 +176,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Activity"
+  
+  # special, provides a little more than previous /api or other 
+  # https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/routes
   /api/routes:
     get:
       description: "List all routes"
@@ -178,18 +195,35 @@ paths:
                   $ref: "#/components/schemas/Activity"
   /api/activities/notifications:
     get:
-      description: "List all notifications"
+      description: 'Return a feed of activity for all of those that I follow'
       tags:
         - activities
+      parameters: []
       responses:
-        "200":
-          description: Returns an array of notification activities"
+        '200':
+          description: Returns an array of activities
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Activity"
+                  $ref: '#/components/schemas/Activity'
+  # # added to test
+  # /api/activities/profile:
+  #   get:
+  #     description: 'Return a feed of activity for all of those that I follow'
+  #     tags:
+  #       - activities
+  #     parameters: []
+  #     responses:
+  #       '200':
+  #         description: Returns an array of activities
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/Activity'
 
 components:
   schemas:
@@ -250,7 +284,6 @@ components:
         created_at:
           type: string
           example: "2023-02-06T18:11:03+00:00"
-
     Message:
       type: object
       properties:
@@ -277,7 +310,10 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "YourFriend"
+          example: "worf"
         handle:
           type: string
-          example: "YourFriend"
+          example: "worf"
+
+
+

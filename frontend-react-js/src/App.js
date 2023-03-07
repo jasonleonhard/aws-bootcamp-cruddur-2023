@@ -29,14 +29,19 @@ const router = createBrowserRouter([
     path: "/health",
     element: <HealthPage />,
   },
+  // WIP: only seeing @jasonleonhard at top of page but no content below
   {
     path: "/@:handle",
     element: <UserFeedPage />,
   },
+  // does render messages for user sort of 
+  // https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/messages
   {
     path: "/messages",
     element: <MessageGroupsPage />,
   },
+  // does render messages for user sort of when clicked
+  // https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/messages/@jasonleonhard
   {
     path: "/messages/@:handle",
     element: <MessageGroupPage />,
@@ -57,6 +62,9 @@ const router = createBrowserRouter([
     path: "/forgot",
     element: <RecoverPage />,
   },
+  // renders notifications page @ /notifications front and
+  // front: https://3000-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/notifications 
+  // backend api: https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/activities/notifications
   {
     path: "/notifications",
     element: <NotificationsPage />,

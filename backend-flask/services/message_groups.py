@@ -18,8 +18,8 @@ class MessageGroups:
             },
             {
                 'uuid': '417c360e-c4e6-4fce-873b-d2d71469b4ac',
-                'display_name': 'YourFriend',
-                'handle':  'YourFriend',
+                'display_name': 'Worf',
+                'handle':  'worf',
                 'created_at': now.isoformat()
             }]
         model['data'] = results
