@@ -1,42 +1,41 @@
-from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
-from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry import trace
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
-from aws_xray_sdk.core import xray_recorder
-from services.user_activities import *
-from services.show_activity import *
-from services.search_activities import *
-from services.notifications_activities import *
-from services.messages import *
-from services.message_groups import *
-from services.create_reply import *
-from services.create_message import *
-from services.create_activity import *
-from services.home_activities import *
-from flask import got_request_exception
-import rollbar.contrib.flask
-import rollbar
+# CORE
 from flask import Flask, jsonify
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
-import requests
 
-from flask import Flask
-app = Flask(__name__)
+# SERVICES
+from services.home_activities import *
+from services.create_activity import *
+from services.create_message import *
+from services.create_reply import *
+from services.message_groups import *
+from services.messages import *
+from services.notifications_activities import *
+from services.search_activities import *
+from services.show_activity import *
+from services.user_activities import *
+from services.home_activities import *
+
+# XRAY
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+# HONEYCOMB.io
+from opentelemetry import trace
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor
 
 # ROLLBAR
 # Rollbar init code. You'll need the following to use Rollbar with Flask.
 # This requires the 'blinker' package to be installed
 # import os
-
-
-# x-ray
-
-# honeycomb.io
+from flask import got_request_exception
+import rollbar.contrib.flask
+import rollbar
 
 # CloudWatch logs and WatchTower
 # import watchtower
@@ -50,14 +49,14 @@ app = Flask(__name__)
 # cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
 # LOGGER.addHandler(console_handler)
 # LOGGER.addHandler(cw_handler)
-# # LOGGER.info("Test app.py log: just configed Logger to Use CloudWatch")
+# # LOGGER.info("Test app.py log: just configured Logger to Use CloudWatch")
 # LOGGER.info("HomeActivities")
 
-# honeycomb.io IInitialize tracing and an exporter that can send data to Honeycomb
+# HONEYCOMB.io Initialize tracing and an exporter that can send data to Honeycomb
 provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
-# refreshing endpoint will show in attached flask logs and honeycomb.io dashboard
+# refreshing endpoint will show in attached flask logs and HONEYCOMB.io dashboard
 # https://ui.honeycomb.io/jl-2c/environments/bootcamp/datasets/backend-flask/home
 simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
 provider.add_span_processor(simple_processor)
@@ -66,7 +65,7 @@ tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
 
-# x-ray
+# XRAY
 try:
     xray_url = os.getenv("AWS_XRAY_URL")
     print(xray_url)
@@ -79,7 +78,7 @@ try:
 except:
     print("An exception occurred")
 
-# honeycomb.io Initialize automatic instrumentation with Flask
+# HONEYCOMB.io Initialize automatic instrumentation with Flask
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 

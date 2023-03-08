@@ -6,7 +6,6 @@ from lib import created_at, expires_at
 
 class ProfileActivities:
     def run():
-        now = datetime.now(timezone.utc).astimezone()
         results = [{
             'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
             'display_name': 'Jason Leonhard',

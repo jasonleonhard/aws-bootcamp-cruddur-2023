@@ -1,19 +1,7 @@
 version: "3.8"
 services:
-  # setup: # must run before all other services to make sure gitpod commits are correct bc they do not allow editing commits easily
-  #   container_name: setup
-  #   # image: alpine/git:latest
-  #   # image: alpine:latest
-  #   image: alpine
-  #   command: sh -c 'echo "REMEMBER to check your git config names before committing. Verify git config then backend verifies we setup correctly via make start";'
-  #   # build: .
-  #   # command: sh -c 'apk update && apk add git && git config --local user.email "jasonleonhard@users.noreply.github.com"; git config --local user.name "Jason Leonhard"; echo "global user"; git config --list --global | grep -i user; echo "local user"; git config --list --local | grep -i user;  if [[ `pwd` == '/Users/`whoami`/code/aws-bootcamp-cruddur-2023' ]]; then echo "local"; open http://localhost:3000/; open http://localhost:4567/api/activities/home; else echo "gitpod" && open https://3000-jasonleonha-awsbootcamp-f5djeabluiq.ws-us89b.gitpod.io/ && open https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-us89b.gitpod.io/api/activities/home; fi;'
-  #   # command: sh -c 'make start'
-  #   # entrypoint: ./bin/sh
   backend-flask:
     container_name: backend-flask
-    # depends_on:
-    # - setup # makes sure setup is run before backend-flask
     image: python:3.10-slim-buster
     volumes:
       - ./backend-flask:/backend-flask
@@ -22,16 +10,8 @@ services:
     ports:
       - "4567:4567"
     command: sh -c "echo 'REMEMBER make sure your git config --list and --global have the correct name and email' && cd /backend-flask && pip3 install -r requirements.txt && python3 -m flask run --host=0.0.0.0 --port=4567"
-    # healthcheck:
-    #   test: ["CMD-SHELL", "curl --fail http://localhost:4567/health || exit 1"]
-    #   # test: ["CMD-SHELL", "curl --fail https://localhost:4567/health || exit 1"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 1
   frontend-react-js:
     container_name: frontend-react-js
-    # depends_on:
-    #   - setup # makes sure setup is run before backend-flask
     image: node:16.18
     volumes:
       - ./frontend-react-js:/frontend-react-js
@@ -40,12 +20,6 @@ services:
     ports:
       - "3000:3000"
     command: sh -c "cd /frontend-react-js && npm install && npm start"
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:3000/"]
-    #   # test: ["CMD", "curl", "-f", "https://localhost:3000/"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 1
   db:
     container_name: postrgres
     image: postgres:13-alpine
@@ -76,14 +50,6 @@ services:
     image: "amazon/aws-xray-daemon"
     env_file:
       - .env
-    # environment:
-    #   AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-    #   AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-    #   AWS_REGION: "${AWS_REGION}"
-    #   AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
-    #   AWS_XRAY_DAEMON_ADDRESS: "${AWS_XRAY_DAEMON_ADDRESS}"
-    #   # AWS_XRAY_URL: "https://2000-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io"
-    #   # AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
     command:
       - "xray -o -b xray-daemon:2000" # do not check ec2 instance metadata and bind to address
       # - "xray -o -b xray-daemon:2000 -l=debug" # also debug level
