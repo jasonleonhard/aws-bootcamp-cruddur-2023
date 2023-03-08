@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from lib import now
 
 
 class CreateMessage:
@@ -12,7 +12,7 @@ class CreateMessage:
             model['errors'] = ['user_sender_handle_blank']
 
         if user_receiver_handle == None or len(user_receiver_handle) < 1:
-            model['errors'] = ['user_reciever_handle_blank']
+            model['errors'] = ['user_receiver_handle_blank']
 
         if message == None or len(message) < 1:
             model['errors'] = ['message_blank']
@@ -22,19 +22,16 @@ class CreateMessage:
         if model['errors']:
             # return what we provided
             model['data'] = {
-                # 'display_name': 'Jason Leonhard',
                 'display_name': 'Jason Leonhard',
                 'handle':  user_sender_handle,
                 'message': message
             }
         else:
-            now = datetime.now(timezone.utc).astimezone()
             model['data'] = {
                 'uuid': uuid.uuid4(),
-                # 'display_name': 'Jason Leonhard',
                 'display_name': 'Jason Leonhard',
                 'handle':  user_sender_handle,
                 'message': message,
-                'created_at': now.isoformat()
+                'created_at': now()
             }
         return model

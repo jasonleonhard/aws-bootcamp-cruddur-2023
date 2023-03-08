@@ -1,6 +1,7 @@
 # ADDED AND NOT SURE WILL WORK
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
+from lib import created_at, expires_at
 
 
 class ProfileActivities:
@@ -22,8 +23,8 @@ class ProfileActivities:
             'profile-display-name': 'profile-display-name here',
             'profile-username': 'profile-username here',
             'profile-desc': 'profile-desc here',
-            'created_at': (now - timedelta(days=2)).isoformat(),
-            'expires_at': (now + timedelta(days=5)).isoformat(),
+            'created_at': created_at(2),
+            'expires_at': expires_at(5),
             'likes_count': 5,
             'replies_count': 1,
             'reposts_count': 0,
@@ -35,8 +36,8 @@ class ProfileActivities:
                 'likes_count': 0,
                 'replies_count': 0,
                 'reposts_count': 0,
-                'created_at': (now - timedelta(days=2)).isoformat(),
-                'expires_at': (now + timedelta(days=5)).isoformat(),
+                'created_at': created_at(2),
+                'expires_at': expires_at(5),
             }],
         }
         ]

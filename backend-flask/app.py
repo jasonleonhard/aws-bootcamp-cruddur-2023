@@ -1,3 +1,24 @@
+from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry import trace
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+from aws_xray_sdk.core import xray_recorder
+from services.user_activities import *
+from services.show_activity import *
+from services.search_activities import *
+from services.notifications_activities import *
+from services.messages import *
+from services.message_groups import *
+from services.create_reply import *
+from services.create_message import *
+from services.create_activity import *
+from services.home_activities import *
+from flask import got_request_exception
+import rollbar.contrib.flask
+import rollbar
 from flask import Flask, jsonify
 from flask import request
 from flask_cors import CORS, cross_origin
@@ -8,36 +29,14 @@ from flask import Flask
 app = Flask(__name__)
 
 # ROLLBAR
-## Rollbar init code. You'll need the following to use Rollbar with Flask.
-## This requires the 'blinker' package to be installed
+# Rollbar init code. You'll need the following to use Rollbar with Flask.
+# This requires the 'blinker' package to be installed
 # import os
-import rollbar
-import rollbar.contrib.flask
-from flask import got_request_exception
 
-from services.home_activities import *
-from services.create_activity import *
-from services.create_message import *
-from services.create_reply import *
-from services.message_groups import *
-from services.messages import *
-from services.notifications_activities import *
-from services.search_activities import *
-from services.show_activity import *
-from services.user_activities import *
-from services.home_activities import *
 
 # x-ray
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 # honeycomb.io
-from opentelemetry import trace
-from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor
 
 # CloudWatch logs and WatchTower
 # import watchtower
@@ -105,6 +104,8 @@ cors = CORS(
 #     return response
 
 # ROLLBAR
+
+
 @app.before_first_request
 def init_rollbar():
     ROLLBAR_ACCESS_TOKEN = os.getenv("ROLLBAR_ACCESS_TOKEN")
@@ -165,6 +166,8 @@ def data_message_groups():
         return model['data'], 200
 
 # was
+
+
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
 # @xray_recorder.capture('messages/@<string:handle>')
 def data_messages(handle):
@@ -433,7 +436,8 @@ def hello():
 # ROLLBAR
 @app.route('/rollbar/test')
 def rollbar_test():
-    rollbar.report_message('rollbar.report_message here and https://rollbar.com/awswell/all/items', 'warning')
+    rollbar.report_message(
+        'rollbar.report_message here and https://rollbar.com/awswell/all/items', 'warning')
     return "RollBar Test Route returns fine"
 
 

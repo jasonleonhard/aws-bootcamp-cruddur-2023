@@ -1,26 +1,20 @@
-# I managed to figure out what was borking my features, I added that opentelemetry honeycomb.io trace to my backend notifications service class, very similar to how he did it and then my feature stoppe working and only provided this error which was not very helpful: "Internal Server Error
-# The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application."
-
-# # IMPORTANT: bc changes using the tracer code above this endpoint stopped working
-# # for the time being the code below allws the endpoint to function
-# # https://4567-jasonleonha-awsbootcamp-f5djeabluiq.ws-eu89.gitpod.io/api/activities/notifications
-
-from datetime import datetime, timedelta, timezone
 from opentelemetry import trace
+
+from lib import created_at, expires_at, created_at_hours, expires_at_hours
 
 tracer = trace.get_tracer("notification.activities")
 
+
 class NotificationsActivities:
     def run():
-        now = datetime.now(timezone.utc).astimezone()
         results = [{
             'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
             'display_name': 'Jason Leonhard',
             'handle': 'jasonleonhard',
             'user_handle': '@jasonleonhard',
             'message': 'Flask is fun.',
-            'created_at': (now - timedelta(days=2)).isoformat(),
-            'expires_at': (now + timedelta(days=5)).isoformat(),
+            'created_at': created_at(2),
+            'expires_at': expires_at(5),
             'likes_count': 5,
             'replies_count': 1,
             'reposts_count': 0,
@@ -35,8 +29,8 @@ class NotificationsActivities:
                     'likes_count': 0,
                     'replies_count': 0,
                     'reposts_count': 0,
-                    'created_at': (now - timedelta(days=2)).isoformat(),
-                    'expires_at': (now + timedelta(days=11)).isoformat(),
+                    'created_at': created_at(2),
+                    'expires_at': expires_at(11),
                 },
                 {
                     'uuid': '66e12864-8c26-4c3a-9658-95a10f8fea67',
@@ -44,8 +38,8 @@ class NotificationsActivities:
                     'handle': 'worf',
                     'user_handle': '@worf',
                     'message': 'I am out of prune juice',
-                    'created_at': (now - timedelta(days=7)).isoformat(),
-                    'expires_at': (now + timedelta(days=9)).isoformat(),
+                    'created_at': created_at(7),
+                    'expires_at': expires_at(9),
                     'likes': 0,
                     'replies': []
                 },
@@ -55,8 +49,8 @@ class NotificationsActivities:
                     'handle': 'garek',
                     'user_handle': '@garek',
                     'message': 'My dear doctor, I am just simple tailor',
-                    'created_at': (now - timedelta(hours=1)).isoformat(),
-                    'expires_at': (now + timedelta(hours=12)).isoformat(),
+                    'created_at': created_at_hours(1),
+                    'expires_at': expires_at_hours(12),
                     'likes': 0,
                     'replies': []
                 },
@@ -66,8 +60,8 @@ class NotificationsActivities:
                     'handle': 'coco',
                     'user_handle': '@coco',
                     'message': 'I am conan',
-                    'created_at': (now - timedelta(days=2)).isoformat(),
-                    'expires_at': (now + timedelta(days=5)).isoformat(),
+                    'created_at': created_at(2),
+                    'expires_at': expires_at(5),
                     'likes_count': 5,
                     'replies_count': 1,
                     'reposts_count': 0,
@@ -82,7 +76,7 @@ class NotificationsActivities:
 # # class HomeActivities:
 # #     def run():
 # #       # logger.info("HomeActivities")
-# #       # with tracer.start_as_current_span("home-activites-mock-data"):
+# #       # with tracer.start_as_current_span("home-activities-mock-data"):
 # #         # span = trace.get_current_span()
 # #         # now = datetime.now(timezone.utc).astimezone()
 # #         # span.set_attribute("app.now", now.isoformat())
@@ -131,7 +125,7 @@ class NotificationsActivities:
 # #         # span.set_attribute("app.result_length", len(results))
 # #         return results
 # ###################################################
-# NOT WORKING YET 
+# NOT WORKING YET
 
 # from datetime import datetime, timedelta, timezone
 # from opentelemetry import trace

@@ -30,8 +30,7 @@
 #         return model
 
 
-
-from datetime import datetime, timedelta, timezone
+from lib import created_at, expires_at, created_at_hours, expires_at_hours
 
 
 class MessageGroups:
@@ -41,16 +40,14 @@ class MessageGroups:
             'data': None
         }
 
-        now = datetime.now(timezone.utc).astimezone()
         results = [
             {
                 'uuid': '24b95582-9e7b-4e0a-9ad1-639773ab7552',
                 'display_name': 'Jason Leonhard',
                 'handle':  'jasonleonhard',
                 'user_handle':  '@jasonleonhard',
-                # 'created_at': now.isoformat()
-                'created_at': (now - timedelta(days=7)).isoformat(),
-                'expires_at': (now + timedelta(days=9)).isoformat(),
+                'created_at': created_at(7),
+                'expires_at': expires_at(9),
                 'likes_count': 5,
                 'replies_count': 1,
                 'reposts_count': 0,
@@ -60,9 +57,8 @@ class MessageGroups:
                 'display_name': 'Worf',
                 'handle':  'worf',
                 'user_handle':  '@worf',
-                # 'created_at': now.isoformat()
-                'created_at': (now - timedelta(days=3)).isoformat(),
-                'expires_at': (now + timedelta(days=7)).isoformat(),
+                'created_at': created_at(3),
+                'expires_at': expires_at(7),
                 'likes_count': 5,
                 'replies_count': 1,
                 'reposts_count': 0,
@@ -73,8 +69,8 @@ class MessageGroups:
                 'handle': 'garek',
                 'user_handle': '@garek',
                 'message': 'My dear doctor, I am just simple tailor',
-                'created_at': (now - timedelta(hours=1)).isoformat(),
-                'expires_at': (now + timedelta(hours=12)).isoformat(),
+                'created_at': created_at_hours(1),
+                'expires_at': expires_at_hours(12),
                 # 'likes': 0,
                 # 'replies': []
                 'likes_count': 5,
@@ -87,8 +83,8 @@ class MessageGroups:
                 'handle': 'coco',
                 'user_handle': '@coco',
                 'message': 'I am conan',
-                'created_at': (now - timedelta(days=2)).isoformat(),
-                'expires_at': (now + timedelta(days=5)).isoformat(),
+                'created_at': created_at(2),
+                'created_at': expires_at(5),
                 'likes_count': 5,
                 'replies_count': 1,
                 'reposts_count': 0,

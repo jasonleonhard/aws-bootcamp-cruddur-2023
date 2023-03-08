@@ -1,8 +1,9 @@
-import os
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 # import XRay SDK libraries
 from aws_xray_sdk.core import xray_recorder, patch_all
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+from lib import created_at, expires_at
 
 
 class UserActivities:
@@ -37,39 +38,28 @@ class UserActivities:
                     now = datetime.now()
                     results = [
                         {
-                            'uuid': '4e81c06a-db0f-4281-b4cc-98208537772a',
-                            # 'display_name': 'Jason Leonhard',
-                            # 'created_at': now.isoformat(),
-                            # 'handle':  'jasonleonhard',
-                            # 'user_handle': '@jasonleonhard',
+                            'created_at': created_at(7),
                             'display_name': user_handle,
+                            'expires_at': expires_at(42),
                             'handle':  user_handle,
-                            'user_handle': user_handle,
-                            # 'message': user_handle,
-                            'message': 'Cloud is fun! idk',
-                            'created_at': (now - timedelta(days=7)).isoformat(),
-                            'expires_at': (now + timedelta(days=9)).isoformat(),
                             'likes_count': 15,
+                            'message': 'Cloud is fun! they say',
                             'replies_count': 1,
                             'reposts_count': 0,
+                            'user_handle': user_handle,
+                            'uuid': '4e81c06a-db0f-4281-b4cc-98208537772a',
                         },
                         {
-                            'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
-                            # 'display_name': 'Jason Leonhard',
-                            # 'handle':  'jasonleonhard',
-                            # 'user_handle':  '@jasonleonard',
-                            # 'display_name': 'Worf',
-                            # 'handle':  'worf',
+                            'created_at': created_at(3),
                             'display_name': user_handle,
+                            'expires_at': expires_at(11),
                             'handle':  user_handle,
-                            'user_handle': user_handle,
-                            # 'message': user_handle,
-                            'message': 'Cloud is fun they say!',
                             'likes_count': 3,
+                            'message': 'Cloud is fun they say!',
                             'replies_count': 0,
                             'reposts_count': 2,
-                            'created_at': (now - timedelta(days=1)).isoformat(),
-                            'expires_at': (now + timedelta(days=31)).isoformat()
+                            'user_handle': user_handle,
+                            'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
                         }
                     ]
                     model['data'] = results

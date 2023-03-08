@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from lib import created_at, expires_at
 
 
 class Messages:
@@ -8,8 +8,6 @@ class Messages:
             'data': None
         }
 
-        now = datetime.now(timezone.utc).astimezone()
-
         results = [
             {
                 'uuid': '4e81c06a-db0f-4281-b4cc-98208537772a',
@@ -17,9 +15,8 @@ class Messages:
                 'handle':  'jasonleonhard',
                 'user_handle': '@jasonleonhard',
                 'message': 'Cloud is fun! idk',
-                # 'created_at': now.isoformat(),
-                'created_at': (now - timedelta(days=7)).isoformat(),
-                'expires_at': (now + timedelta(days=9)).isoformat(),
+                'created_at': created_at(7),
+                'expires_at': expires_at(9),
                 'likes_count': 5,
                 'replies_count': 1,
                 'reposts_count': 0,
@@ -30,9 +27,8 @@ class Messages:
                 'handle':  'worf',
                 'user_handle':  '@worf',
                 'message': 'This platform is great!',
-                # 'created_at': now.isoformat(),
-                'created_at': (now - timedelta(days=7)).isoformat(),
-                'expires_at': (now + timedelta(days=31)).isoformat(),
+                'created_at': created_at(7),
+                'expires_at': expires_at(31),
                 'likes_count': 5,
                 'replies_count': 1,
                 'reposts_count': 0,

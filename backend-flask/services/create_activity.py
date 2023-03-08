@@ -1,5 +1,7 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
+
+from lib import now
 
 
 class CreateActivity:
@@ -8,8 +10,6 @@ class CreateActivity:
             'errors': None,
             'data': None
         }
-
-        now = datetime.now(timezone.utc).astimezone()
 
         if (ttl == '30-days'):
             ttl_offset = timedelta(days=30)
@@ -47,7 +47,7 @@ class CreateActivity:
                 'display_name': 'Jason Leonhard',
                 'handle':  user_handle,
                 'message': message,
-                'created_at': now.isoformat(),
+                'created_at': now(),
                 'expires_at': (now + ttl_offset).isoformat()
             }
         return model
