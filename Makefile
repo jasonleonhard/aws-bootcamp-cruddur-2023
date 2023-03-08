@@ -1,12 +1,6 @@
 SHELL := /bin/zsh
 .SILENT:
 
-gotchas:
-	echo "CAREFUL you must signin to see all content"
-	echo "CAREFUL you cannot have commented code inside a method unless its the last line even if backslash escaped"
-	echo "CAREFUL notice check-yourself requires back slash escapes bc of the conditional. The last line backslash is optional"
-	echo "CAREFUL"
-
 help:
 	clear
 	make gotchas
@@ -14,6 +8,12 @@ help:
 	echo "make ____ # make run any below method"
 	cat Makefile | grep ":$$" | grep -v "^#" | grep -v "^\ " | grep -v "^\." | tr -d ":" | sort | xargs; # IN MAKEFILE
 	# cat Makefile | grep ":$" | grep -v "^#" | grep -v "^\ " | grep -v "^\." | tr -d ":" | sort | xargs; # NOT A MAKEFILE
+
+gotchas:
+	echo "CAREFUL you must signin to see all content"
+	echo "CAREFUL you cannot have commented code inside a method unless its the last line even if backslash escaped"
+	echo "CAREFUL notice check-yourself requires back slash escapes bc of the conditional. The last line backslash is optional"
+	echo "CAREFUL"
 
 check-yourself:
 	if [[ $$(whoami) = "gitpod" ]]; then \
@@ -65,7 +65,13 @@ stop:
 	make rm-imgs
 
 imgs:
-	make open-docker # REMEMBER To view images docker app must be open first
+	if [[ $$(whoami) = "gitpod" ]]; then \
+		echo "you are gitpod"; \
+	else \
+		echo "you are local"; \
+		echo "REMEMBER To view images docker app must be open first when local" \
+		make open-docker \
+	fi; \
 	docker images
 
 ps:
