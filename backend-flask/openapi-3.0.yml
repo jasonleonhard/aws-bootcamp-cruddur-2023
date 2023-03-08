@@ -233,6 +233,9 @@ components:
         handle:
           type: string
           example: "jasonleonhard"
+        user_handle:
+          type: string
+          example: "@jasonleonhard"
         message:
           type: string
           example: "Who likes pineapple on their pizza?"
@@ -260,9 +263,15 @@ components:
         reply_to_activity_uuid:
           type: string
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
+        display_name:
+          type: string
+          example: "Jason Leonhard"
         handle:
           type: string
           example: "jasonleonhard"
+        user_handle:
+          type: string
+          example: "@jasonleonhard"
         message:
           type: string
           example: "Who likes pineapple on their pizza?"
@@ -293,6 +302,9 @@ components:
         handle:
           type: string
           example: "jasonleonhard"
+        user_handle:
+          type: string
+          example: "@jasonleonhard"
         message:
           type: string
           example: "Who likes pineapple on their pizza?"
@@ -310,10 +322,13 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "worf"
+          example: "Worf"
         handle:
           type: string
           example: "worf"
+        user_handle:
+          type: string
+          example: "@worf"
         message:
           type: string
           example: "Who likes pineapple on their pizza?"
