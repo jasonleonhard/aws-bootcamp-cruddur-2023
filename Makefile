@@ -69,8 +69,8 @@ imgs:
 		echo "you are gitpod"; \
 	else \
 		echo "you are local"; \
-		echo "REMEMBER To view images docker app must be open first when local" \
-		make open-docker \
+		echo "REMEMBER To view images docker app must be open first when local"; \
+		make open-docker; \
 	fi; \
 	docker images
 
