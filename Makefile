@@ -94,6 +94,9 @@ start:
 up:
 	make start
 
+restart-back:
+	docker restart backend-flask
+
 restart:
 	docker restart $(docker ps -q)
 
